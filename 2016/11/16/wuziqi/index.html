@@ -1,0 +1,504 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>wuziqi | Hacker And Painter</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="canvas部分
+&amp;lt;canvas id=&amp;quot;chess&amp;quot; width=&amp;quot;450px&amp;quot; height=&amp;quot;450px&amp;quot;&amp;gt;&amp;lt;/canvas&amp;gt;
+js部分
+window.onload = function(){
+var chessBoard = [];
+var me = true;
+var over = false;
+// 赢">
+<meta property="og:type" content="article">
+<meta property="og:title" content="wuziqi">
+<meta property="og:url" content="http://yoursite.com/2016/11/16/wuziqi/index.html">
+<meta property="og:site_name" content="Hacker And Painter">
+<meta property="og:description" content="canvas部分
+&amp;lt;canvas id=&amp;quot;chess&amp;quot; width=&amp;quot;450px&amp;quot; height=&amp;quot;450px&amp;quot;&amp;gt;&amp;lt;/canvas&amp;gt;
+js部分
+window.onload = function(){
+var chessBoard = [];
+var me = true;
+var over = false;
+// 赢">
+<meta property="og:updated_time" content="2016-11-16T07:28:27.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="wuziqi">
+<meta name="twitter:description" content="canvas部分
+&amp;lt;canvas id=&amp;quot;chess&amp;quot; width=&amp;quot;450px&amp;quot; height=&amp;quot;450px&amp;quot;&amp;gt;&amp;lt;/canvas&amp;gt;
+js部分
+window.onload = function(){
+var chessBoard = [];
+var me = true;
+var over = false;
+// 赢">
+  
+    <link rel="alternative" href="/atom.xml" title="Hacker And Painter" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7/html5shiv.min.js"></script><![endif]-->
+  
+</head>
+<body>
+<div id="container">
+  <div id="wrap">
+    <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hacker And Painter</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//www.baidu.com/baidu" method="get" accept-charset="utf-8" class="search-form">
+          <input type="search" name="word" maxlength="20" class="search-form-input" placeholder="Search">
+          <input type="submit" value="" class="search-form-submit">
+          <input name=tn type=hidden value="bds">
+          <input name=cl type=hidden value="3">
+          <input name=ct type=hidden value="2097152">
+          <input type="hidden" name="si" value="yoursite.com">
+        </form>
+      </div>
+    </div>
+  </div>
+</header>
+    <div class="outer">
+      <section id="main"><article id="post-wuziqi" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/11/16/wuziqi/" class="article-date">
+  <time datetime="2016-11-16T07:19:25.000Z" itemprop="datePublished">2016-11-16</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      wuziqi
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>canvas部分</p>
+<pre><code>&lt;canvas id=&quot;chess&quot; width=&quot;450px&quot; height=&quot;450px&quot;&gt;&lt;/canvas&gt;
+</code></pre><p>js部分</p>
+<pre><code>window.onload = function(){
+var chessBoard = [];
+var me = true;
+var over = false;
+// 赢法数组
+var wins = [];
+// 赢法的统计数组
+var myWin = [];
+var computerWin = [];
+for(var i = 0; i &lt; 15; i++){
+    chessBoard[i] = [];
+    for(var j = 0; j &lt; 15; j++){
+        chessBoard[i][j] = 0;
+    }
+}
+// 获取在棋盘内任意一点的赢法
+for(var i = 0; i &lt; 15; i++){
+    wins[i] = [];
+    for(var j = 0; j &lt; 15; j++){
+        wins[i][j] = [];
+    }
+}
+var count = 0;
+// 横向赢法
+for(var i = 0; i &lt; 15; i++){
+    for(var j = 0; j &lt; 11; j++){
+        for(var k = 0; k &lt; 5; k++){
+            wins[i][j+k][count] = true;
+        }
+        count++;
+    }
+}
+// 纵向赢法
+for(var i = 0; i &lt; 15; i++){
+    for(var j = 0; j &lt; 11; j++){
+        for(var k = 0; k &lt; 5; k++){
+            wins[j+k][i][count] = true;
+        }
+        count++;
+    }
+}
+// 斜线赢法
+for(var i = 0; i &lt; 11; i++){
+    for(var j = 0; j &lt; 11; j++){
+        for(var k = 0; k &lt; 5; k++){
+            wins[i+k][j+k][count] = true;
+        }
+        count++;
+    }
+}
+// 反斜线赢法
+for(var i = 0; i &lt; 11; i++){
+    for(var j = 14; j &gt; 3; j--){
+        for(var k = 0; k &lt; 5; k++){
+            wins[i+k][j-k][count] = true;
+        }
+        count++;
+    }
+}
+
+for(var i = 0; i &lt; count; i++){
+    myWin[i] = 0;
+    computerWin[i] = 0;
+}
+// 开始制作棋盘
+var chess = document.getElementById(&apos;chess&apos;);
+var context = chess.getContext(&apos;2d&apos;) ;
+context.strokeStyle = &quot;#BFBFBF&quot;;
+// 渲染背景图
+var logo = new Image();
+logo.src = &quot;images/logo1.png&quot;;    
+logo.onload = function(){
+    context.drawImage(logo, 0, 0, 450, 450);
+    drawChessBoard();        
+}
+// 制作棋盘线
+var drawChessBoard = function(){
+    for(var i = 0; i &lt; 15; i++){
+        context.moveTo(15 + i * 30, 15);
+        context.lineTo(15 + i * 30, 435);
+        context.stroke();
+        context.moveTo(15, 15 + i*30);
+        context.lineTo(435, 15 + i*30);
+        // 描边
+        context.stroke();
+    }
+}
+var oneStep = function(i, j, me){
+    context.beginPath();
+    context.arc(15 + i * 30, 15 + j * 30, 13, 0, 2 * Math.PI);
+    context.closePath();
+    var gradient = context.createRadialGradient(15 + i * 30 + 2, 15 + j * 30 - 2, 13, 13 + i * 30 + 2, 15 + j * 30 - 2, 0);
+    if(me){
+        gradient.addColorStop(0,&quot;#0A0A0A&quot;);
+        gradient.addColorStop(1,&quot;#636766&quot;);
+    }else{
+        gradient.addColorStop(0,&quot;#D1D1D1&quot;);
+        gradient.addColorStop(1,&quot;#F9F9F9&quot;);
+    }
+
+    context.fillStyle = gradient;
+    // 填充
+    context.fill();
+}
+chess.onclick = function(e){
+    if (over) {
+        return;
+    }
+    if(!me){
+        return;
+    }
+    var x = e.offsetX;
+    var y = e.offsetY;
+    var i = Math.floor(x / 30);
+    var j = Math.floor(y / 30);
+    if(chessBoard[i][j] == 0){
+        oneStep(i, j, me);
+        chessBoard[i][j] = 1;
+    for(var k = 0; k &lt; count; k++){
+        if(wins[i][j][k]){
+            myWin[k]++;
+            computerWin[k] = 6;
+            if(myWin[k] == 5){
+                window.alert(&quot;你赢了！&quot;)
+                over = true;
+            }
+        }
+    }
+    if(!over){
+        me = !me;
+        computerAI();
+    }
+}
+}
+var computerAI = function(){
+    var myScore = [];
+    var computerScore = [];
+    var max = 0;
+    var u = 0, v = 0;
+    for(var i = 0; i &lt; 15; i++){
+        myScore[i] = [];
+        computerScore[i] = [];
+        for(var j = 0; j &lt; 15; j++){
+            myScore[i][j] = 0;
+            computerScore[i][j] = 0;
+        }
+    }
+    for(var i = 0; i &lt; 15; i++){
+        for(var j = 0; j &lt; 15; j++){
+            if(chessBoard[i][j] == 0){
+                for(var k = 0; k &lt; count; k++){
+                    if(wins[i][j][k]){
+                        if(myWin[k] == 1){
+                            myScore[i][j] += 200;
+                        }else if(myWin[k] == 2){
+                            myScore[i][j] += 400;
+                        }else if (myWin[k] == 3) {
+                            myScore[i][j] += 2000;
+                        }else if (myWin[k] == 4) {
+                            myScore[i][j] += 10000;
+                        }
+                        if(computerWin[k] == 1){
+                            computerScore[i][j] += 220;
+                        }else if(computerWin[k] == 2){
+                            computerScore[i][j] += 420;
+                        }else if (computerWin[k] == 3) {
+                            computerScore[i][j] += 2100;
+                        }else if (computerWin[k] == 4) {
+                            computerScore[i][j] += 20000;
+                        }
+                    }
+                }
+                if (myScore[i][j] &gt; max) {
+                    max = myScore[i][j];
+                    u = i;
+                    v = j;
+                }else if (myScore[i][j] == max) {
+                    if (computerScore[i][j] &gt; computerScore[u][v]) {
+                        u = i;
+                        v = j;
+                    }
+                }
+                if (computerScore[i][j] &gt; max) {
+                    max = computerScore[i][j];
+                    u = i;
+                    v = j;
+                }else if (computerScore[i][j] == max) {
+                    if (myScore[i][j] &gt; myScore[u][v]) {
+                        u = i;
+                        v = j;
+                    }
+                }
+            }
+        }
+    }
+    oneStep(u, v, false);
+    chessBoard[u][v] = 2;
+    for(var k = 0; k &lt; count; k++){
+        if(wins[u][v][k]){
+            computerWin[k]++;
+            myWin[k] = 6;
+            if(computerWin[k] == 5){
+                window.alert(&quot;计算机赢了！&quot;)
+                over = true;
+            }
+        }
+    }
+    if(!over){
+        me = !me;
+    }
+}
+}
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      
+        <a data-url="http://yoursite.com/2016/11/16/wuziqi/" data-id="civkm4wg800018wj3gdph20cy" class="article-share-link" data-share="baidu" data-title="wuziqi">分享到</a>
+      
+
+      
+        <a href="http://yoursite.com/2016/11/16/wuziqi/#ds-thread" class="article-comment-link">评论</a>
+      
+
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2016/11/16/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">上一篇</strong>
+      <div class="article-nav-title">Hello World</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+  <section id="comments">
+    <div id="ds-thread" class="ds-thread" data-thread-key="2016/11/16/wuziqi/" data-title="wuziqi" data-url="http://yoursite.com/2016/11/16/wuziqi/"></div>
+  </section>
+</section>
+      
+      <aside id="sidebar">
+  
+    
+  
+    
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">近期文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2016/11/16/wuziqi/">wuziqi</a>
+          </li>
+        
+          <li>
+            <a href="/2016/11/16/hello-world/">Hello World</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">友情链接</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="http://arvinxiang.com" target="_blank">主题作者</a>
+          </li>
+        
+          <li>
+            <a href="http://reqianduan.com" target="_blank">热前端</a>
+          </li>
+        
+          <li>
+            <a href="http://yuancheng.work" target="_blank">远程.work</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+      
+    </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016 SF Ding<br>
+      Powered by <a href="//hexo.io/" target="_blank">Hexo</a>
+      .
+      Theme by <a href="https://github.com/xiangming/landscape-plus" target="_blank">Landscape-plus</a>
+    </div>
+  </div>
+</footer>
+  </div>
+  <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+  <!-- totop start -->
+<div id="totop">
+<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+</div>
+
+<!-- totop end -->
+
+<!-- 多说公共js代码 start -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"reqianduan"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0]
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- 多说公共js代码 end -->
+
+
+<!-- 百度分享 start -->
+
+<div id="article-share-box" class="article-share-box">
+  <div id="bdshare" class="bdsharebuttonbox article-share-links">
+    <a class="article-share-weibo" data-cmd="tsina" title="分享到新浪微博"></a>
+    <a class="article-share-weixin" data-cmd="weixin" title="分享到微信"></a>
+    <a class="article-share-qq" data-cmd="sqq" title="分享到QQ"></a>
+    <a class="article-share-renren" data-cmd="renren" title="分享到人人网"></a>
+    <a class="article-share-more" data-cmd="more" title="更多"></a>
+  </div>
+</div>
+<script>
+  function SetShareData(cmd, config) {
+    if (shareDataTitle && shareDataUrl) {
+      config.bdText = shareDataTitle;
+      config.bdUrl = shareDataUrl;
+    }
+    return config;
+  }
+  window._bd_share_config={
+    "common":{onBeforeClick: SetShareData},
+    "share":{"bdCustomStyle":"/css/bdshare.css"}
+  };
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+<!-- 百度分享 end -->
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+</div>
+</body>
+</html>
