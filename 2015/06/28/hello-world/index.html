@@ -4,14 +4,21 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Hacker And Painter</title>
+  <title>Hello World | Hacker And Painter</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hacker And Painter">
-<meta property="og:url" content="http://yoursite.com/index.html">
+  <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
+Quick">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hello World">
+<meta property="og:url" content="http://yoursite.com/2015/06/28/hello-world/index.html">
 <meta property="og:site_name" content="Hacker And Painter">
+<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
+Quick">
+<meta property="og:updated_time" content="2016-11-16T08:13:00.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hacker And Painter">
+<meta name="twitter:title" content="Hello World">
+<meta name="twitter:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
+Quick">
   
     <link rel="alternative" href="/atom.xml" title="Hacker And Painter" type="application/atom+xml">
   
@@ -63,266 +70,7 @@
   </div>
 </header>
     <div class="outer">
-      <section id="main">
-  
-    <article id="post-wuziqi" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2015/07/02/wuziqi/" class="article-date">
-  <time datetime="2015-07-02T01:39:12.000Z" itemprop="datePublished">2015-07-02</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/07/02/wuziqi/">wuziqi</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>canvas部分</p>
-<pre><code>&lt;canvas id=&quot;chess&quot; width=&quot;450px&quot; height=&quot;450px&quot;&gt;&lt;/canvas&gt;
-</code></pre><p>js部分</p>
-<pre><code>window.onload = function(){
-var chessBoard = [];
-var me = true;
-var over = false;
-// 赢法数组
-var wins = [];
-// 赢法的统计数组
-var myWin = [];
-var computerWin = [];
-for(var i = 0; i &lt; 15; i++){
-    chessBoard[i] = [];
-    for(var j = 0; j &lt; 15; j++){
-        chessBoard[i][j] = 0;
-    }
-}
-// 获取在棋盘内任意一点的赢法
-for(var i = 0; i &lt; 15; i++){
-    wins[i] = [];
-    for(var j = 0; j &lt; 15; j++){
-        wins[i][j] = [];
-    }
-}
-var count = 0;
-// 横向赢法
-for(var i = 0; i &lt; 15; i++){
-    for(var j = 0; j &lt; 11; j++){
-        for(var k = 0; k &lt; 5; k++){
-            wins[i][j+k][count] = true;
-        }
-        count++;
-    }
-}
-// 纵向赢法
-for(var i = 0; i &lt; 15; i++){
-    for(var j = 0; j &lt; 11; j++){
-        for(var k = 0; k &lt; 5; k++){
-            wins[j+k][i][count] = true;
-        }
-        count++;
-    }
-}
-// 斜线赢法
-for(var i = 0; i &lt; 11; i++){
-    for(var j = 0; j &lt; 11; j++){
-        for(var k = 0; k &lt; 5; k++){
-            wins[i+k][j+k][count] = true;
-        }
-        count++;
-    }
-}
-// 反斜线赢法
-for(var i = 0; i &lt; 11; i++){
-    for(var j = 14; j &gt; 3; j--){
-        for(var k = 0; k &lt; 5; k++){
-            wins[i+k][j-k][count] = true;
-        }
-        count++;
-    }
-}
-
-for(var i = 0; i &lt; count; i++){
-    myWin[i] = 0;
-    computerWin[i] = 0;
-}
-// 开始制作棋盘
-var chess = document.getElementById(&apos;chess&apos;);
-var context = chess.getContext(&apos;2d&apos;) ;
-context.strokeStyle = &quot;#BFBFBF&quot;;
-// 渲染背景图
-var logo = new Image();
-logo.src = &quot;images/logo1.png&quot;;    
-logo.onload = function(){
-    context.drawImage(logo, 0, 0, 450, 450);
-    drawChessBoard();        
-}
-// 制作棋盘线
-var drawChessBoard = function(){
-    for(var i = 0; i &lt; 15; i++){
-        context.moveTo(15 + i * 30, 15);
-        context.lineTo(15 + i * 30, 435);
-        context.stroke();
-        context.moveTo(15, 15 + i*30);
-        context.lineTo(435, 15 + i*30);
-        // 描边
-        context.stroke();
-    }
-}
-var oneStep = function(i, j, me){
-    context.beginPath();
-    context.arc(15 + i * 30, 15 + j * 30, 13, 0, 2 * Math.PI);
-    context.closePath();
-    var gradient = context.createRadialGradient(15 + i * 30 + 2, 15 + j * 30 - 2, 13, 13 + i * 30 + 2, 15 + j * 30 - 2, 0);
-    if(me){
-        gradient.addColorStop(0,&quot;#0A0A0A&quot;);
-        gradient.addColorStop(1,&quot;#636766&quot;);
-    }else{
-        gradient.addColorStop(0,&quot;#D1D1D1&quot;);
-        gradient.addColorStop(1,&quot;#F9F9F9&quot;);
-    }
-
-    context.fillStyle = gradient;
-    // 填充
-    context.fill();
-}
-chess.onclick = function(e){
-    if (over) {
-        return;
-    }
-    if(!me){
-        return;
-    }
-    var x = e.offsetX;
-    var y = e.offsetY;
-    var i = Math.floor(x / 30);
-    var j = Math.floor(y / 30);
-    if(chessBoard[i][j] == 0){
-        oneStep(i, j, me);
-        chessBoard[i][j] = 1;
-    for(var k = 0; k &lt; count; k++){
-        if(wins[i][j][k]){
-            myWin[k]++;
-            computerWin[k] = 6;
-            if(myWin[k] == 5){
-                window.alert(&quot;你赢了！&quot;)
-                over = true;
-            }
-        }
-    }
-    if(!over){
-        me = !me;
-        computerAI();
-    }
-}
-}
-var computerAI = function(){
-    var myScore = [];
-    var computerScore = [];
-    var max = 0;
-    var u = 0, v = 0;
-    for(var i = 0; i &lt; 15; i++){
-        myScore[i] = [];
-        computerScore[i] = [];
-        for(var j = 0; j &lt; 15; j++){
-            myScore[i][j] = 0;
-            computerScore[i][j] = 0;
-        }
-    }
-    for(var i = 0; i &lt; 15; i++){
-        for(var j = 0; j &lt; 15; j++){
-            if(chessBoard[i][j] == 0){
-                for(var k = 0; k &lt; count; k++){
-                    if(wins[i][j][k]){
-                        if(myWin[k] == 1){
-                            myScore[i][j] += 200;
-                        }else if(myWin[k] == 2){
-                            myScore[i][j] += 400;
-                        }else if (myWin[k] == 3) {
-                            myScore[i][j] += 2000;
-                        }else if (myWin[k] == 4) {
-                            myScore[i][j] += 10000;
-                        }
-                        if(computerWin[k] == 1){
-                            computerScore[i][j] += 220;
-                        }else if(computerWin[k] == 2){
-                            computerScore[i][j] += 420;
-                        }else if (computerWin[k] == 3) {
-                            computerScore[i][j] += 2100;
-                        }else if (computerWin[k] == 4) {
-                            computerScore[i][j] += 20000;
-                        }
-                    }
-                }
-                if (myScore[i][j] &gt; max) {
-                    max = myScore[i][j];
-                    u = i;
-                    v = j;
-                }else if (myScore[i][j] == max) {
-                    if (computerScore[i][j] &gt; computerScore[u][v]) {
-                        u = i;
-                        v = j;
-                    }
-                }
-                if (computerScore[i][j] &gt; max) {
-                    max = computerScore[i][j];
-                    u = i;
-                    v = j;
-                }else if (computerScore[i][j] == max) {
-                    if (myScore[i][j] &gt; myScore[u][v]) {
-                        u = i;
-                        v = j;
-                    }
-                }
-            }
-        }
-    }
-    oneStep(u, v, false);
-    chessBoard[u][v] = 2;
-    for(var k = 0; k &lt; count; k++){
-        if(wins[u][v][k]){
-            computerWin[k]++;
-            myWin[k] = 6;
-            if(computerWin[k] == 5){
-                window.alert(&quot;计算机赢了！&quot;)
-                over = true;
-            }
-        }
-    }
-    if(!over){
-        me = !me;
-    }
-}
-}
-</code></pre>
-      
-    </div>
-    <footer class="article-footer">
-      
-        <a data-url="http://yoursite.com/2015/07/02/wuziqi/" data-id="civknhpdp0001egj3jygf379y" class="article-share-link" data-share="baidu" data-title="wuziqi">Share</a>
-      
-
-      
-        <a href="http://yoursite.com/2015/07/02/wuziqi/#ds-thread" class="article-comment-link">Comments</a>
-      
-
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
+      <section id="main"><article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2015/06/28/hello-world/" class="article-date">
   <time datetime="2015-06-28T07:12:13.000Z" itemprop="datePublished">2015-06-28</time>
@@ -335,8 +83,8 @@ var computerAI = function(){
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/06/28/hello-world/">Hello World</a>
+    <h1 class="article-title" itemprop="name">
+      Hello World
     </h1>
   
 
@@ -369,11 +117,28 @@ var computerAI = function(){
     </footer>
   </div>
   
+    
+<nav id="article-nav">
+  
+    <a href="/2015/07/02/wuziqi/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          wuziqi
+        
+      </div>
+    </a>
+  
+  
+</nav>
+
+  
 </article>
 
 
-  
-
+  <section id="comments">
+    <div id="ds-thread" class="ds-thread" data-thread-key="2015/06/28/hello-world/" data-title="Hello World" data-url="http://yoursite.com/2015/06/28/hello-world/"></div>
+  </section>
 </section>
       
       <aside id="sidebar">
